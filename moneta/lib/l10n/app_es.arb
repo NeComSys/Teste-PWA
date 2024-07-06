@@ -1,0 +1,21 @@
+{
+    "appLanguage": "Portugues",
+    "@appLanguage": {
+        "description": "Idioma atual"
+    },
+    "authPage": "Autenticação",
+    "authPage_title": "Marko Autenticação",
+    "authPage_subTitle": "Página de autentição de usuário",
+    "authPage_welcome": "Bem-vindo ao Moneta",
+    "authPage_welcome_desc": "Sistema de reembolso de despesas",
+    "authPage_text": "Para entrar no sistema, por favor, utilize seus dados de acesso",
+    "authPage_userName": "Usuário",
+    "authPage_password": "Senha",
+    "authPage_rememberMe": "Lembre de mim",
+    "authPage_forgotPassword": "Esqueci a minha senha",
+    "authPage_button_login": "Entrar",
+    "authPage_language_text": "Alterar idioma?",
+    "homePage": "Despesas Administrativas",
+    "adminExpenseReport": "Reembolso de Despesas",
+    "system_version": "Versão"
+}

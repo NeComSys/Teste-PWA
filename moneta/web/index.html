@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Moneta - Siste">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="moneta">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <script>
+    // Ajuste da altura do corpo ao abrir o teclado no iOS
+    window.addEventListener('resize', function () {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        document.body.style.height = window.innerHeight + 'px';
+      }
+    });
+
+    window.addEventListener('focusin', function () {
+      document.body.style.height = window.innerHeight + 'px';
+    });
+
+    window.addEventListener('focusout', function () {
+      document.body.style.height = '100%';
+    });
+  </script>
+
+  <script>
+    // Valor injetado pelo flutter build
+    var serviceWorkerVersion = '{{flutter_service_worker_version}}';
+  </script>
+
+  <title>moneta</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <script>
+    let serviceWorkerInitialized = false;
+
+    // if ('serviceWorker' in navigator) {
+    //   navigator.serviceWorker.register('/flutter_service_worker.js')
+    //     .then((registration) => {
+    //       // O Service Worker foi registrado com sucesso
+    //       console.log('Service Worker registrado com sucesso com escopo: ', registration.scope);
+
+    //       registration.onupdatefound = () => {
+    //         const installingWorker = registration.installing;
+    //         installingWorker.onstatechange = () => {
+    //           if (installingWorker.state === 'installed') {
+    //             console.log(navigator.serviceWorker.controller)
+    //             if (navigator.serviceWorker.controller) {
+    //               // O Service Worker foi atualizado
+    //               console.log('Service Worker atualizado');
+    //             } else {
+    //               // O Service Worker foi instalado
+    //               console.log('Service Worker instalado');
+    //             }
+    //             serviceWorkerInitialized = true;
+    //           }
+    //         };
+    //       };
+    //     })
+    //     .catch((err) => {
+    //       // O registro do Service Worker falhou
+    //       console.log('O registro do Service Worker falhou: ', err);
+    //     });
+    // }
+
+    window.addEventListener('load', function () {
+      function checkServiceWorkerInitialized() {
+        if (serviceWorkerInitialized) {
+          // Inicie o aplicativo Flutter aqui
+           console.log(serviceWorkerVersion)
+           _flutter.loader.load({
+            serviceWorker: {
+              serviceWorkerVersion: serviceWorkerVersion,
+            },
+            onEntrypointLoaded: function (engineInitializer) {
+              engineInitializer.initializeEngine().then(function (appRunner) {
+                console.log('antes de iniciar')
+                appRunner.runApp();
+              });
+            }
+          });
+        } else {
+          // Verifique novamente em 100 milissegundos
+          setTimeout(checkServiceWorkerInitialized, 100);
+        }
+      }
+
+      checkServiceWorkerInitialized();
+    });
+
+    function updateIcons(theme) {
+      var favicon = document.getElementById('favicon');
+      var appleTouchIcon = document.getElementById('apple-touch-icon');
+      if (favicon && appleTouchIcon) {
+        if (theme === 'dark') {
+          favicon.href = 'icons/icon-dark-48x48.png';
+          appleTouchIcon.href = 'icons/icon-dark-192x192.png';
+        } else {
+          favicon.href = 'icons/icon-light-48x48.png';
+          appleTouchIcon.href = 'icons/icon-light-192x192.png';
+        }
+      } else {
+        console.error('Elemento favicon ou apple-touch-icon não encontrado');
+      }
+    }
+
+    // Verificação inicial
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    updateIcons(isDarkMode ? 'dark' : 'light');
+
+    // Listen for theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+      updateIcons(event.matches ? 'dark' : 'light');
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+
+</html>
